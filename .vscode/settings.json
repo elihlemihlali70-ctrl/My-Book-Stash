@@ -1,4 +1,5 @@
 {
+  "window.title": "My Book Stash",
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit",

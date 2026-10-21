@@ -1,3 +1,5 @@
+import { Palette } from '../constants/theme';
+import { GlobalStyles } from '../constants/globalStyles';
 
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
@@ -16,11 +18,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getBooks, type Book } from '../services/books';
 
-const PURPLE = '#40533C';
-const LIGHT_PURPLE = '#E6E5D7';
-const BACKGROUND = '#F3EBDD';
-const TEXT = '#30362C';
-const MUTED = '#777466';
+const PURPLE = Palette.brand;
+const LIGHT_PURPLE = Palette.brandLight;
+const BACKGROUND = Palette.page;
+const TEXT = Palette.text;
+const MUTED = Palette.muted;
 
 export default function SettingsScreen() {
   const router = useRouter();
@@ -82,7 +84,7 @@ export default function SettingsScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <SafeAreaView style={[GlobalStyles.screen, styles.safeArea]} edges={['top']}>
       <BooksBackground />
       <StatusBar barStyle="dark-content" backgroundColor={BACKGROUND} />
 
@@ -162,7 +164,7 @@ export default function SettingsScreen() {
                 <View
                   style={[
                     styles.statusDot,
-                    { backgroundColor: '#B79A62' },
+                    { backgroundColor: Palette.accent },
                   ]}
                 />
                 <Text style={styles.statLabel}>Want to Read</Text>
@@ -188,7 +190,7 @@ export default function SettingsScreen() {
                 <View
                   style={[
                     styles.statusDot,
-                    { backgroundColor: '#727B54' },
+                    { backgroundColor: Palette.oliveDark },
                   ]}
                 />
                 <Text style={styles.statLabel}>Completed</Text>
@@ -306,12 +308,12 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 14,
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 14,
     borderWidth: 1,
-    borderColor: '#E3DAC8',
+    borderColor: Palette.border,
   },
   backArrow: {
     color: PURPLE,
@@ -358,11 +360,11 @@ const styles = StyleSheet.create({
   welcomeTitle: {
     fontSize: 19,
     fontWeight: '800',
-    color: '#FFFCF4',
+    color: Palette.surface,
   },
   welcomeSubtitle: {
     fontSize: 12,
-    color: '#ECE6D5',
+    color: Palette.textOnDark,
     marginTop: 5,
   },
   sectionHeader: {
@@ -382,12 +384,12 @@ const styles = StyleSheet.create({
     color: MUTED,
   },
   statsCard: {
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
     borderRadius: 20,
     padding: 19,
     marginBottom: 26,
     borderWidth: 1,
-    borderColor: '#E7DFD1',
+    borderColor: Palette.border,
   },
   totalRow: {
     flexDirection: 'row',
@@ -418,7 +420,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#E6E5D7',
+    backgroundColor: Palette.brandLight,
     marginVertical: 12,
   },
   statRow: {
@@ -448,7 +450,7 @@ const styles = StyleSheet.create({
     color: TEXT,
   },
   loadingCard: {
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
     borderRadius: 20,
     padding: 32,
     alignItems: 'center',
@@ -462,22 +464,22 @@ const styles = StyleSheet.create({
   actionCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
     borderRadius: 18,
     padding: 16,
     marginBottom: 26,
     borderWidth: 1,
-    borderColor: '#E7DFD1',
+    borderColor: Palette.border,
   },
   preferenceCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
     borderRadius: 18,
     padding: 16,
     marginBottom: 26,
     borderWidth: 1,
-    borderColor: '#E7DFD1',
+    borderColor: Palette.border,
   },
   actionIcon: {
     width: 46,
@@ -511,12 +513,12 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   aboutCard: {
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
     borderRadius: 18,
     padding: 18,
     marginBottom: 24,
     borderWidth: 1,
-    borderColor: '#E7DFD1',
+    borderColor: Palette.border,
   },
   aboutRow: {
     flexDirection: 'row',
@@ -549,7 +551,7 @@ const styles = StyleSheet.create({
   homeButtonText: {
     fontSize: 15,
     fontWeight: '800',
-    color: '#FFFCF4',
+    color: Palette.surface,
   },
   footer: {
     fontSize: 12,

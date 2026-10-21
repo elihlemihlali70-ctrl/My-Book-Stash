@@ -1,3 +1,4 @@
+import { Palette } from '../constants/theme';
 import { CameraView, useCameraPermissions, type BarcodeScanningResult } from 'expo-camera';
 import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
@@ -155,7 +156,7 @@ export default function ScanBookScreen() {
   if (!permission) {
     return (
       <SafeAreaView style={styles.permissionScreen} edges={['top']}>
-        <ActivityIndicator size="large" color="#FFFCF4" />
+        <ActivityIndicator size="large" color={Palette.surface} />
         <Text style={styles.permissionText}>Checking camera permission…</Text>
       </SafeAreaView>
     );
@@ -226,7 +227,7 @@ export default function ScanBookScreen() {
             <View style={styles.scanFrame} />
             <View style={styles.bottomCard}>
               {processing ? (
-                <ActivityIndicator color="#FFFCF4" />
+                <ActivityIndicator color={Palette.surface} />
               ) : null}
               <Text style={styles.hintText}>
                 {processing ? 'Looking up and adding the book…' : error || hint}
@@ -253,38 +254,38 @@ export default function ScanBookScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#20291F' },
+  container: { flex: 1, backgroundColor: Palette.camera },
   permissionScreen: {
     flex: 1,
-    backgroundColor: '#334631',
+    backgroundColor: Palette.brandDeep,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 28,
   },
-  permissionTitle: { color: '#FFFCF4', fontSize: 22, fontWeight: '800', textAlign: 'center' },
-  permissionText: { color: '#ECE6D5', fontSize: 15, lineHeight: 22, textAlign: 'center', marginTop: 12 },
+  permissionTitle: { color: Palette.surface, fontSize: 22, fontWeight: '800', textAlign: 'center' },
+  permissionText: { color: Palette.textOnDark, fontSize: 15, lineHeight: 22, textAlign: 'center', marginTop: 12 },
   overlay: { flex: 1, justifyContent: 'space-between', padding: 20 },
   topBar: { flexDirection: 'row', alignItems: 'center', gap: 14, marginTop: 8 },
   backButton: { backgroundColor: 'rgba(27, 37, 27, 0.78)', borderRadius: 11, paddingHorizontal: 14, paddingVertical: 10 },
-  backButtonText: { color: '#FFFCF4', fontWeight: '700' },
-  heading: { color: '#FFFCF4', fontSize: 18, fontWeight: '800', textShadowColor: '#000000', textShadowRadius: 5 },
+  backButtonText: { color: Palette.surface, fontWeight: '700' },
+  heading: { color: Palette.surface, fontSize: 18, fontWeight: '800', textShadowColor: Palette.black, textShadowRadius: 5 },
   scanFrame: {
     width: '86%',
     height: 150,
     alignSelf: 'center',
     borderWidth: 3,
-    borderColor: '#FFFCF4',
+    borderColor: Palette.surface,
     borderRadius: 16,
     backgroundColor: 'transparent',
   },
   bottomCard: { backgroundColor: 'rgba(27, 37, 27, 0.86)', borderRadius: 18, padding: 18, alignItems: 'center', marginBottom: 12 },
-  hintText: { color: '#FFFCF4', fontSize: 15, fontWeight: '600', lineHeight: 22, textAlign: 'center', marginTop: 6 },
-  messageCard: { backgroundColor: '#FFFCF4', borderRadius: 20, padding: 22, marginTop: 'auto', marginBottom: 'auto' },
-  successTitle: { color: '#30362C', fontSize: 22, fontWeight: '800', textAlign: 'center' },
-  messageText: { color: '#55584B', fontSize: 16, textAlign: 'center', marginTop: 10, marginBottom: 18 },
-  primaryButton: { minHeight: 48, backgroundColor: '#40533C', borderRadius: 12, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, marginTop: 12 },
-  primaryButtonText: { color: '#FFFCF4', fontSize: 14, fontWeight: '800' },
+  hintText: { color: Palette.surface, fontSize: 15, fontWeight: '600', lineHeight: 22, textAlign: 'center', marginTop: 6 },
+  messageCard: { backgroundColor: Palette.surface, borderRadius: 20, padding: 22, marginTop: 'auto', marginBottom: 'auto' },
+  successTitle: { color: Palette.text, fontSize: 22, fontWeight: '800', textAlign: 'center' },
+  messageText: { color: Palette.mutedDark, fontSize: 16, textAlign: 'center', marginTop: 10, marginBottom: 18 },
+  primaryButton: { minHeight: 48, backgroundColor: Palette.brand, borderRadius: 12, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, marginTop: 12 },
+  primaryButtonText: { color: Palette.surface, fontSize: 14, fontWeight: '800' },
   secondaryButton: { minHeight: 44, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14, marginTop: 7 },
-  secondaryButtonText: { color: '#5F6154', fontSize: 14, fontWeight: '700' },
+  secondaryButtonText: { color: Palette.mutedDark, fontSize: 14, fontWeight: '700' },
   errorActions: { width: '100%', marginTop: 5 },
 });

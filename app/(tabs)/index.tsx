@@ -1,3 +1,5 @@
+import { Palette } from '../../constants/theme';
+import { GlobalStyles } from '../../constants/globalStyles';
 
 
 import { Ionicons } from '@expo/vector-icons';
@@ -44,8 +46,8 @@ const updateBookMeta = async (id: string, updates: BookUpdate) => {
   await updateBook(id, updates as Partial<Omit<Book, 'id'>>);
 };
 
-const PURPLE = '#40533C';
-const LIGHT_PURPLE = '#E7E6D9';
+const PURPLE = Palette.brand;
+const LIGHT_PURPLE = Palette.brandLight;
 
 const FILTERS: Array<'All' | ReadingStatus | 'Favourites'> = [
   'All',
@@ -251,7 +253,7 @@ export default function HomeScreen() {
             <Ionicons
               name={item.isFavorite ? 'heart' : 'heart-outline'}
               size={24}
-              color={item.isFavorite ? '#DC2626' : '#888'}
+              color={item.isFavorite ? Palette.favorite : Palette.icon}
             />
           </TouchableOpacity>
         </View>
@@ -272,7 +274,7 @@ export default function HomeScreen() {
                       : 'star-outline'
                   }
                   size={22}
-                  color="#40533C"
+                  color={Palette.brand}
                 />
               </TouchableOpacity>
             ))}
@@ -326,7 +328,7 @@ export default function HomeScreen() {
             accessibilityRole="button"
             accessibilityLabel={`Delete ${item.title}`}
           >
-            <Ionicons name="trash-outline" size={18} color="#DC2626" />
+            <Ionicons name="trash-outline" size={18} color={Palette.favorite} />
           </TouchableOpacity>
         </View>
       </View>
@@ -334,7 +336,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={[GlobalStyles.screen, styles.container]} edges={['top']}>
       <BooksBackground />
       <FlatList
         data={filteredBooks}
@@ -361,7 +363,7 @@ export default function HomeScreen() {
 
               <View style={styles.headerIcon}>
                 <Image
-                  source={require('../../assets/images/icon.png')}
+                  source={require('../../assets/images/bookstash-logo.jpg')}
                   style={styles.headerLogo}
                   resizeMode="cover"
                   accessibilityLabel="Book Stash logo"
@@ -376,7 +378,7 @@ export default function HomeScreen() {
                 <Text style={styles.statLabel}>Total books</Text>
               </View>
               <View style={styles.statCard}>
-                <Ionicons name="bookmark-outline" size={23} color="#D97706" />
+                <Ionicons name="bookmark-outline" size={23} color={Palette.accentWarm} />
                 <Text style={styles.statNumber}>{wantToReadBooks}</Text>
                 <Text style={styles.statLabel}>Want to Read</Text>
               </View>
@@ -388,7 +390,7 @@ export default function HomeScreen() {
               </View>
 
               <View style={styles.statCard}>
-                <Ionicons name="checkmark-circle-outline" size={23} color="#727B54" />
+                <Ionicons name="checkmark-circle-outline" size={23} color={Palette.oliveDark} />
                 <Text style={styles.statNumber}>{completedBooks}</Text>
                 <Text style={styles.statLabel}>Completed</Text>
               </View>
@@ -438,18 +440,18 @@ export default function HomeScreen() {
             <Text style={styles.sectionTitle}>Your collection</Text>
 
             <View style={styles.searchBox}>
-              <Ionicons name="search-outline" size={21} color="#888" />
+              <Ionicons name="search-outline" size={21} color={Palette.icon} />
               <TextInput
                 style={styles.searchInput}
                 placeholder="Search title, author or genre..."
-                placeholderTextColor="#999"
+                placeholderTextColor={Palette.placeholder}
                 value={search}
                 onChangeText={setSearch}
                 autoCapitalize="none"
               />
               {!!search && (
                 <TouchableOpacity onPress={() => setSearch('')}>
-                  <Ionicons name="close-circle" size={20} color="#888" />
+                  <Ionicons name="close-circle" size={20} color={Palette.icon} />
                 </TouchableOpacity>
               )}
             </View>
@@ -488,7 +490,7 @@ export default function HomeScreen() {
         }
         ListEmptyComponent={
           <View style={styles.emptyState}>
-            <Ionicons name="book-outline" size={52} color="#8A9271" />
+            <Ionicons name="book-outline" size={52} color={Palette.olive} />
             <Text style={styles.emptyTitle}>No books found</Text>
             <Text style={styles.emptyText}>
               {books.length === 0
@@ -586,8 +588,8 @@ const styles = StyleSheet.create({
     marginRight: 12,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#DED5C3',
-    backgroundColor: '#FFFCF4',
+    borderColor: Palette.borderStrong,
+    backgroundColor: Palette.surface,
   },
   greeting: {
     color: PURPLE,
@@ -596,13 +598,13 @@ const styles = StyleSheet.create({
     letterSpacing: 1.4,
   },
   heading: {
-    color: '#30362C',
+    color: Palette.text,
     fontSize: 29,
     fontWeight: '800',
     marginTop: 5,
   },
   subtitle: {
-    color: '#263329',
+    color: Palette.brandDark,
     fontSize: 14,
     fontWeight: '700',
     marginTop: 4,
@@ -612,7 +614,7 @@ const styles = StyleSheet.create({
     height: 58,
     borderRadius: 19,
     overflow: 'hidden',
-    backgroundColor: '#FDF8E5',
+    backgroundColor: Palette.surfaceWarm,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -629,22 +631,22 @@ const styles = StyleSheet.create({
   statCard: {
     flexBasis: '47%',
     flexGrow: 1,
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
     borderRadius: 16,
     paddingVertical: 15,
     paddingHorizontal: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#E2D9C7',
+    borderColor: Palette.border,
   },
   statNumber: {
-    color: '#30362C',
+    color: Palette.text,
     fontSize: 23,
     fontWeight: '800',
     marginTop: 7,
   },
   statLabel: {
-    color: '#777466',
+    color: Palette.muted,
     fontSize: 11,
     marginTop: 4,
     textAlign: 'center',
@@ -708,7 +710,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   sectionTitle: {
-    color: '#30362C',
+    color: Palette.text,
     fontSize: 21,
     fontWeight: '800',
     marginBottom: 13,
@@ -716,17 +718,17 @@ const styles = StyleSheet.create({
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
     borderRadius: 13,
     paddingHorizontal: 13,
     minHeight: 49,
     borderWidth: 1,
-    borderColor: '#DED5C3',
+    borderColor: Palette.borderStrong,
     gap: 9,
   },
   searchInput: {
     flex: 1,
-    color: '#30362C',
+    color: Palette.text,
     fontSize: 14,
     paddingVertical: 11,
     outlineStyle: 'none',
@@ -737,8 +739,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   filterChip: {
-    backgroundColor: '#FFFCF4',
-    borderColor: '#DED5C3',
+    backgroundColor: Palette.surface,
+    borderColor: Palette.borderStrong,
     borderWidth: 1,
     paddingHorizontal: 14,
     paddingVertical: 9,
@@ -749,27 +751,27 @@ const styles = StyleSheet.create({
     borderColor: PURPLE,
   },
   filterText: {
-    color: '#6C6C5E',
+    color: Palette.mutedDark,
     fontSize: 12,
     fontWeight: '600',
   },
   filterTextActive: {
-    color: '#FFFCF4',
+    color: Palette.surface,
   },
   resultCount: {
-    color: '#263329',
+    color: Palette.brandDark,
     fontSize: 12,
     fontWeight: '700',
     marginBottom: 10,
     marginTop: 2,
   },
   bookCard: {
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
     borderRadius: 18,
     padding: 15,
     marginBottom: 14,
     borderWidth: 1,
-    borderColor: '#E2D9C7',
+    borderColor: Palette.border,
   },
   bookTop: {
     flexDirection: 'row',
@@ -793,17 +795,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bookTitle: {
-    color: '#30362C',
+    color: Palette.text,
     fontSize: 17,
     fontWeight: '800',
   },
   author: {
-    color: '#777466',
+    color: Palette.muted,
     fontSize: 13,
     marginTop: 4,
   },
   genre: {
-    color: '#5C634D',
+    color: Palette.oliveDark,
     fontSize: 12,
     marginTop: 5,
   },
@@ -821,7 +823,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   bookType: {
-    color: '#858273',
+    color: Palette.mutedLight,
     fontSize: 11,
     marginTop: 6,
   },
@@ -835,7 +837,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   ratingLabel: {
-    color: '#777466',
+    color: Palette.muted,
     fontSize: 12,
     fontWeight: '600',
   },
@@ -844,7 +846,7 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   notes: {
-    color: '#9B9A7F',
+    color: Palette.mutedLight,
     fontSize: 12,
     marginTop: 12,
     lineHeight: 18,
@@ -854,7 +856,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     borderTopWidth: 1,
-    borderTopColor: '#E7DFD1',
+    borderTopColor: Palette.border,
     paddingTop: 12,
     marginTop: 14,
   },
@@ -862,7 +864,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 38,
     borderRadius: 9,
-    backgroundColor: '#F1EAD9',
+    backgroundColor: Palette.surfaceWarm,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -884,17 +886,17 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 420,
     alignSelf: 'center',
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
     borderRadius: 20,
     padding: 20,
   },
   statusModalTitle: {
-    color: '#30362C',
+    color: Palette.text,
     fontSize: 19,
     fontWeight: '800',
   },
   statusModalSubtitle: {
-    color: '#777466',
+    color: Palette.muted,
     fontSize: 13,
     marginTop: 5,
     marginBottom: 15,
@@ -902,21 +904,21 @@ const styles = StyleSheet.create({
   statusChoice: {
     minHeight: 50,
     borderWidth: 1,
-    borderColor: '#DED5C3',
+    borderColor: Palette.borderStrong,
     borderRadius: 12,
     paddingHorizontal: 14,
     marginTop: 9,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
   },
   statusChoiceSelected: {
     borderColor: PURPLE,
-    backgroundColor: '#F1EAD9',
+    backgroundColor: Palette.surfaceWarm,
   },
   statusChoiceText: {
-    color: '#55584B',
+    color: Palette.mutedDark,
     fontSize: 14,
     fontWeight: '600',
   },
@@ -931,7 +933,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   statusModalCancelText: {
-    color: '#777466',
+    color: Palette.muted,
     fontSize: 14,
     fontWeight: '700',
   },
@@ -939,7 +941,7 @@ const styles = StyleSheet.create({
     width: 38,
     height: 38,
     borderRadius: 9,
-    backgroundColor: '#FEF2F2',
+    backgroundColor: Palette.dangerSoft,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -947,18 +949,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 25,
     paddingVertical: 35,
-    backgroundColor: '#FFFCF4',
+    backgroundColor: Palette.surface,
     borderRadius: 16,
     marginTop: 10,
   },
   emptyTitle: {
-    color: '#30362C',
+    color: Palette.text,
     fontSize: 18,
     fontWeight: '800',
     marginTop: 12,
   },
   emptyText: {
-    color: '#777466',
+    color: Palette.muted,
     fontSize: 13,
     textAlign: 'center',
     lineHeight: 20,
@@ -972,7 +974,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   emptyButtonText: {
-    color: '#FFFCF4',
+    color: Palette.surface,
     fontSize: 13,
     fontWeight: '700',
   },

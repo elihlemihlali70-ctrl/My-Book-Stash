@@ -1,3 +1,5 @@
+import { Palette } from '../constants/theme';
+import { GlobalStyles } from '../constants/globalStyles';
 
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -28,18 +30,18 @@ import {
 } from '../services/books';
 
 const COLORS = {
-  background: '#F3EBDD',
-  green: '#40533C',
-  lightGreen: '#E6E5D7',
-  text: '#30362C',
-  muted: '#777466',
-  border: '#DDD7C9',
-  white: '#FFFCF4',
-  cardSurface: '#F3EBDD',
-  danger: '#A65F52',
-  input: '#FFFEFA',
-  placeholder: '#898575',
-  accent: '#92784C',
+  background: Palette.page,
+  green: Palette.brand,
+  lightGreen: Palette.brandLight,
+  text: Palette.text,
+  muted: Palette.muted,
+  border: Palette.border,
+  white: Palette.surface,
+  cardSurface: Palette.page,
+  danger: Palette.danger,
+  input: Palette.surfaceRaised,
+  placeholder: Palette.mutedStrong,
+  accent: Palette.accentDeep,
 };
 
 const STATUSES: ReadingStatus[] = [
@@ -160,7 +162,7 @@ export default function AddBookScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.screen} edges={['top']}>
+    <SafeAreaView style={[GlobalStyles.screen, styles.screen]} edges={['top']}>
     <KeyboardAvoidingView
       style={styles.screen}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -377,11 +379,11 @@ export default function AddBookScreen() {
                 value={isPhysical}
                 onValueChange={setIsPhysical}
                 trackColor={{
-                  false: '#D5D8D0',
-                  true: '#A9B594',
+                  false: Palette.brandLight,
+                  true: Palette.success,
                 }}
                 thumbColor={
-                  isPhysical ? COLORS.green : '#B9B7AC'
+                  isPhysical ? COLORS.green : Palette.mutedStrong
                 }
                 accessibilityLabel="Physical book"
               />
@@ -479,7 +481,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.8,
   },
   subtitle: {
-    color: '#263329',
+    color: Palette.brandDark,
     fontSize: 12,
     fontWeight: '700',
     lineHeight: 19,
@@ -598,7 +600,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.input,
   },
   statusOptionSelected: {
-    borderColor: '#DED8C8',
+    borderColor: Palette.borderStrong,
     backgroundColor: COLORS.lightGreen,
   },
   radio: {
@@ -606,7 +608,7 @@ const styles = StyleSheet.create({
     height: 19,
     borderRadius: 10,
     borderWidth: 1.5,
-    borderColor: '#C7C9B9',
+    borderColor: Palette.borderStrong,
     alignItems: 'center',
     justifyContent: 'center',
   },

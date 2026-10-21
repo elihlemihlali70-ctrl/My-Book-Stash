@@ -1,3 +1,4 @@
+import { Palette } from '../../constants/theme';
 
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
@@ -7,11 +8,11 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#40533C',
-        tabBarInactiveTintColor: '#898575',
+        tabBarActiveTintColor: Palette.brand,
+        tabBarInactiveTintColor: Palette.mutedStrong,
         tabBarStyle: {
-          backgroundColor: '#F3EBDD',
-          borderTopColor: '#E3DAC8',
+          backgroundColor: Palette.page,
+          borderTopColor: Palette.border,
         },
         tabBarLabelStyle: {
           fontSize: 12,

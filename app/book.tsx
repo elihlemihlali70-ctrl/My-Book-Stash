@@ -1,3 +1,5 @@
+import { Palette } from '../constants/theme';
+import { GlobalStyles } from '../constants/globalStyles';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -20,13 +22,13 @@ import {
 } from '../services/books';
 
 const COLORS = {
-  green: '#40533C',
-  lightGreen: '#E6E5D7',
-  text: '#30362C',
-  muted: '#777466',
-  border: '#DDD7C9',
-  white: '#FFFCF4',
-  danger: '#A65F52',
+  green: Palette.brand,
+  lightGreen: Palette.brandLight,
+  text: Palette.text,
+  muted: Palette.muted,
+  border: Palette.border,
+  white: Palette.surface,
+  danger: Palette.danger,
 };
 
 export default function BookScreen() {
@@ -80,7 +82,7 @@ export default function BookScreen() {
   const coverImage = book ? getBookCover(book) : undefined;
 
   return (
-    <SafeAreaView style={styles.screen} edges={['top']}>
+    <SafeAreaView style={[GlobalStyles.screen, styles.screen]} edges={['top']}>
       <BooksBackground />
       <StatusBar barStyle="dark-content" />
 
@@ -284,7 +286,7 @@ const styles = StyleSheet.create({
     gap: 14,
     paddingVertical: 9,
     borderTopWidth: 1,
-    borderTopColor: '#E7DFD1',
+    borderTopColor: Palette.border,
   },
   detailLabel: {
     color: COLORS.muted,

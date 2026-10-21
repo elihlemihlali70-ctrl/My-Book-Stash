@@ -1,3 +1,5 @@
+import { Palette } from '../../constants/theme';
+import { GlobalStyles } from '../../constants/globalStyles';
 
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
@@ -24,15 +26,15 @@ type BookWithInsights = Book & {
 };
 
 const COLORS = {
-  background: '#F3EBDD',
-  purple: '#40533C',
-  darkPurple: '#30362C',
-  muted: '#777466',
-  white: '#FFFCF4',
-  border: '#E3DAC8',
-  lightPurple: '#E6E5D7',
-  track: '#E3DAC8',
-  danger: '#B42318',
+  background: Palette.page,
+  purple: Palette.brand,
+  darkPurple: Palette.text,
+  muted: Palette.muted,
+  white: Palette.surface,
+  border: Palette.border,
+  lightPurple: Palette.brandLight,
+  track: Palette.border,
+  danger: Palette.dangerStrong,
 };
 
 export default function StatisticsScreen() {
@@ -151,7 +153,7 @@ export default function StatisticsScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.centered} edges={['top']}>
+      <SafeAreaView style={[GlobalStyles.screen, styles.centered]} edges={['top']}>
         <BooksBackground />
         <ActivityIndicator size="large" color={COLORS.purple} />
         <Text style={styles.loadingText}>
@@ -162,7 +164,7 @@ export default function StatisticsScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={[GlobalStyles.screen, styles.container]} edges={['top']}>
       <BooksBackground />
       <ScrollView
         contentContainerStyle={styles.content}
@@ -366,7 +368,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     marginTop: 12,
-    color: '#6D6D60',
+    color: Palette.muted,
     fontSize: 14,
   },
   content: {
@@ -409,7 +411,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   backButtonText: {
-    color: '#40533C',
+    color: Palette.brand,
     fontWeight: '700',
   },
   heroCard: {
@@ -419,7 +421,7 @@ const styles = StyleSheet.create({
     marginBottom: 28,
   },
   heroLabel: {
-    color: '#ECE6D5',
+    color: Palette.textOnDark,
     fontSize: 12,
     fontWeight: '800',
     letterSpacing: 1.5,
@@ -431,7 +433,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   heroDescription: {
-    color: '#ECE6D5',
+    color: Palette.textOnDark,
     fontSize: 14,
     marginTop: 4,
   },
@@ -459,18 +461,18 @@ const styles = StyleSheet.create({
     borderColor: COLORS.border,
   },
   statTitle: {
-    color: '#777466',
+    color: Palette.muted,
     fontSize: 12,
     fontWeight: '600',
   },
   statValue: {
-    color: '#30362C',
+    color: Palette.text,
     fontSize: 28,
     fontWeight: '800',
     marginTop: 10,
   },
   statDescription: {
-    color: '#898575',
+    color: Palette.mutedStrong,
     fontSize: 11,
     marginTop: 5,
   },
@@ -490,29 +492,29 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   summaryLabel: {
-    color: '#777466',
+    color: Palette.muted,
     fontSize: 14,
     flexShrink: 1,
   },
   summaryValue: {
-    color: '#30362C',
+    color: Palette.text,
     fontSize: 15,
     fontWeight: '800',
   },
   summaryHint: {
-    color: '#898575',
+    color: Palette.mutedStrong,
     fontSize: 11,
     marginTop: 4,
   },
   noGenresText: {
-    color: '#777466',
+    color: Palette.muted,
     fontSize: 13,
     lineHeight: 19,
     paddingVertical: 17,
   },
   separator: {
     height: 1,
-    backgroundColor: '#F2ECDD',
+    backgroundColor: Palette.surfaceWarm,
   },
   progressCard: {
     backgroundColor: COLORS.white,
@@ -529,7 +531,7 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   progressTitle: {
-    color: '#30362C',
+    color: Palette.text,
     fontSize: 14,
     fontWeight: '700',
   },
@@ -550,7 +552,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   progressDescription: {
-    color: '#898575',
+    color: Palette.mutedStrong,
     fontSize: 12,
     marginTop: 12,
   },
@@ -566,13 +568,13 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   footer: {
-    color: '#898575',
+    color: Palette.mutedStrong,
     fontSize: 12,
     textAlign: 'center',
     marginTop: 22,
   },
   errorBox: {
-    backgroundColor: '#FFF0F0',
+    backgroundColor: Palette.dangerSoft,
     padding: 16,
     borderRadius: 12,
     marginBottom: 20,

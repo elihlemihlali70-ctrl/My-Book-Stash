@@ -1,3 +1,4 @@
+import { Palette } from '../constants/theme';
 import { StyleSheet, Text, type TextProps } from 'react-native';
 
 import { useThemeColor } from '@/hooks/use-theme-color';
@@ -55,6 +56,6 @@ const styles = StyleSheet.create({
   link: {
     lineHeight: 30,
     fontSize: 16,
-    color: '#40533C',
+    color: Palette.brand,
   },
 });

@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
+    Image,
     KeyboardAvoidingView,
     Platform,
     Pressable,
@@ -11,11 +13,14 @@ import {
     View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { GlobalStyles } from './constants/globalStyles';
+import { Palette, Radii } from './constants/theme';
 
 type AuthMode = 'signup' | 'signin';
 
 export default function BookstashAuthScreen() {
-  const [mode, setMode] = useState<AuthMode>('signup');
+  const router = useRouter();
+  const [mode, setMode] = useState<AuthMode>('signin');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,11 +49,7 @@ export default function BookstashAuthScreen() {
       return;
     }
 
-    setMessage(
-      isSignUp
-        ? 'Your details look good. Connect an auth provider to create your account.'
-        : 'Your details look good. Connect an auth provider to sign in.',
-    );
+    setMessage('Authentication is not connected yet. You can browse your library as a guest.');
   }
 
   return (
@@ -63,14 +64,17 @@ export default function BookstashAuthScreen() {
           showsVerticalScrollIndicator={false}>
           <View style={styles.hero}>
             <View style={styles.brandRow}>
-              <View style={styles.brandMark}>
-                <Text style={styles.brandMarkText}>b</Text>
-              </View>
+              <Image
+                source={require('./assets/images/bookstash-logo.jpg')}
+                style={styles.brandLogo}
+                resizeMode="contain"
+                accessibilityLabel="Book Stash logo"
+              />
               <Text style={styles.brandName}>bookstash</Text>
               <View style={styles.brandDots}>
-                <View style={[styles.dot, { backgroundColor: '#B56E24' }]} />
-                <View style={[styles.dot, { backgroundColor: '#D38B55' }]} />
-                <View style={[styles.dot, { backgroundColor: '#E7B99A' }]} />
+                <View style={[styles.dot, { backgroundColor: Palette.accentWarm }]} />
+                <View style={[styles.dot, { backgroundColor: Palette.accentSoft }]} />
+                <View style={[styles.dot, { backgroundColor: Palette.accentPale }]} />
               </View>
             </View>
 
@@ -81,37 +85,21 @@ export default function BookstashAuthScreen() {
               Keep the books you love close, and make room for the ones you haven’t met yet.
             </Text>
 
-            <View accessible={false} style={styles.booksIllustration}>
-              <Text style={styles.sparkle}>✳</Text>
-              <View style={[styles.book, styles.bookOne]}>
-                <View style={[styles.bookSpine, { backgroundColor: '#6B3424' }]} />
-                <Text style={styles.bookTitleLight}>THE{ '\n' }GARDEN</Text>
-                <View style={styles.bookRuleLight} />
-              </View>
-              <View style={[styles.book, styles.bookTwo]}>
-                <View style={[styles.bookSpine, { backgroundColor: '#D19643' }]} />
-                <Text style={styles.bookTitleDark}>FIELD{ '\n' }NOTES</Text>
-                <View style={styles.bookRuleDark} />
-              </View>
-              <View style={[styles.book, styles.bookThree]}>
-                <View style={[styles.bookSpine, { backgroundColor: '#5b7e5e' }]} />
-                <Text style={styles.bookTitleLight}>CHAPTER{ '\n' }ONE</Text>
-                <View style={styles.bookRuleLight} />
-              </View>
-              <View style={styles.openBook}>
-                <Text style={styles.openBookEmoji}>📖</Text>
-              </View>
-              <Text style={styles.tinyStar}>✦</Text>
-            </View>
+            <Image
+              accessible={false}
+              source={require('./assets/images/bookshelf-background.jpg')}
+              style={styles.booksIllustration}
+              resizeMode="cover"
+            />
             <Text style={styles.illustrationCaption}>YOUR SHELF, YOUR STORIES</Text>
           </View>
 
           <View style={styles.formPanel}>
             <View style={styles.panelTopRow}>
               <View style={styles.panelDots}>
-                <View style={[styles.dot, { backgroundColor: '#F6C79F' }]} />
-                <View style={[styles.dot, { backgroundColor: '#E9AA7D' }]} />
-                <View style={[styles.dot, { backgroundColor: '#a89e97' }]} />
+                <View style={[styles.dot, { backgroundColor: Palette.brandLight }]} />
+                <View style={[styles.dot, { backgroundColor: Palette.accent }]} />
+                <View style={[styles.dot, { backgroundColor: Palette.mutedStrong }]} />
               </View>
               <Text style={styles.panelDoodle}>✧</Text>
             </View>
@@ -170,7 +158,7 @@ export default function BookstashAuthScreen() {
                   setMessage('');
                 }}
                 placeholder="At least 8 characters"
-                placeholderTextColor="#B87556"
+                placeholderTextColor={Palette.accent}
                 secureTextEntry={!showPassword}
                 autoCapitalize="none"
                 autoComplete={isSignUp ? 'new-password' : 'current-password'}
@@ -213,6 +201,12 @@ export default function BookstashAuthScreen() {
                 <Text style={styles.modeSwitchLink}>{isSignUp ? 'Sign in' : 'Sign up'}</Text>
               </Pressable>
             </View>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => router.replace('/(tabs)')}
+              style={styles.guestButton}>
+              <Text style={styles.guestButtonText}>Continue as a guest</Text>
+            </Pressable>
             <Text style={styles.footerNote}>MADE FOR THE LOVE OF A GOOD BOOK</Text>
           </View>
         </ScrollView>
@@ -251,7 +245,7 @@ function AuthField({
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor="#B87556"
+        placeholderTextColor={Palette.accent}
         keyboardType={keyboardType}
         autoCapitalize={autoCapitalize}
         autoComplete={autoComplete}
@@ -265,8 +259,9 @@ function AuthField({
 
 const styles = StyleSheet.create({
   safeArea: {
+    ...GlobalStyles.screen,
     flex: 1,
-    backgroundColor: '#F6F1E8',
+    backgroundColor: Palette.page,
   },
   keyboardView: {
     flex: 1,
@@ -280,7 +275,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 26,
     alignItems: 'center',
-    backgroundColor: '#F6F1E8',
+    backgroundColor: Palette.page,
   },
   brandRow: {
     width: '100%',
@@ -288,25 +283,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 9,
   },
-  brandMark: {
-    width: 32,
-    height: 32,
-    borderWidth: 1.5,
-    borderColor: '#6B3F25',
+  brandLogo: {
+    width: 42,
+    height: 42,
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    transform: [{ rotate: '-7deg' }],
-  },
-  brandMarkText: {
-    color: '#6B3F25',
-    fontSize: 23,
-    lineHeight: 25,
-    fontWeight: '700',
-    fontFamily: Platform.select({ ios: 'Georgia', android: 'serif', default: 'serif' }),
   },
   brandName: {
-    color: '#3A281C',
+    color: Palette.text,
     fontSize: 21,
     letterSpacing: -0.8,
     fontWeight: '700',
@@ -324,7 +307,7 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     marginTop: 18,
-    color: '#35261C',
+    color: Palette.text,
     textAlign: 'center',
     fontSize: 30,
     lineHeight: 35,
@@ -333,13 +316,13 @@ const styles = StyleSheet.create({
     fontFamily: Platform.select({ ios: 'Georgia', android: 'serif', default: 'serif' }),
   },
   heroTitleAccent: {
-    color: '#A5641F',
+    color: Palette.accent,
     fontStyle: 'italic',
   },
   heroSubtitle: {
     maxWidth: 300,
     marginTop: 8,
-    color: '#78685B',
+    color: Palette.muted,
     textAlign: 'center',
     fontSize: 13,
     lineHeight: 19,
@@ -348,118 +331,12 @@ const styles = StyleSheet.create({
     width: 284,
     height: 142,
     marginTop: 13,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  book: {
-    position: 'absolute',
-    width: 172,
-    height: 42,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#3B261A',
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderRadius: 16,
     overflow: 'hidden',
-    shadowColor: '#54381F',
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    shadowOffset: { width: 1, height: 3 },
-    elevation: 3,
-  },
-  bookOne: {
-    bottom: 7,
-    left: 54,
-    backgroundColor: '#B86643',
-    transform: [{ rotate: '7deg' }],
-  },
-  bookTwo: {
-    bottom: 43,
-    left: 57,
-    backgroundColor: '#E6C184',
-    transform: [{ rotate: '-5deg' }],
-  },
-  bookThree: {
-    bottom: 78,
-    left: 62,
-    backgroundColor: '#586B54',
-    transform: [{ rotate: '2deg' }],
-  },
-  bookSpine: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: 17,
-  },
-  bookTitleLight: {
-    color: '#FFF4DB',
-    textAlign: 'center',
-    fontSize: 8,
-    lineHeight: 9,
-    fontWeight: '800',
-    letterSpacing: 1.4,
-    marginLeft: 13,
-  },
-  bookTitleDark: {
-    color: '#533820',
-    textAlign: 'center',
-    fontSize: 8,
-    lineHeight: 9,
-    fontWeight: '800',
-    letterSpacing: 1.4,
-    marginLeft: 13,
-  },
-  bookRuleLight: {
-    position: 'absolute',
-    width: 22,
-    height: 1,
-    bottom: 7,
-    backgroundColor: '#E8C99B',
-    marginLeft: 13,
-  },
-  bookRuleDark: {
-    position: 'absolute',
-    width: 22,
-    height: 1,
-    bottom: 7,
-    backgroundColor: '#7E6040',
-    marginLeft: 13,
-  },
-  sparkle: {
-    position: 'absolute',
-    top: 14,
-    left: 41,
-    color: '#B56E24',
-    fontSize: 25,
-  },
-  tinyStar: {
-    position: 'absolute',
-    right: 27,
-    top: 39,
-    color: '#B56E24',
-    fontSize: 19,
-  },
-  openBook: {
-    position: 'absolute',
-    right: 8,
-    bottom: 5,
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F1D6B7',
-    borderWidth: 1,
-    borderColor: '#DFC19F',
-    transform: [{ rotate: '9deg' }],
-  },
-  openBookEmoji: {
-    fontSize: 23,
   },
   illustrationCaption: {
     marginTop: 5,
-    color: '#A77B57',
+    color: Palette.accent,
     fontSize: 9,
     letterSpacing: 2.2,
     fontWeight: '700',
@@ -471,7 +348,7 @@ const styles = StyleSheet.create({
     paddingBottom: 28,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    backgroundColor: '#A56520',
+    backgroundColor: Palette.brand,
   },
   panelTopRow: {
     height: 23,
@@ -484,13 +361,13 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   panelDoodle: {
-    color: '#F4C798',
+    color: Palette.brandLight,
     fontSize: 27,
     lineHeight: 25,
   },
   formTitle: {
     marginTop: 1,
-    color: '#FFF9F0',
+    color: Palette.surface,
     fontSize: 35,
     lineHeight: 42,
     fontWeight: '800',
@@ -499,7 +376,7 @@ const styles = StyleSheet.create({
   formSubtitle: {
     marginTop: 1,
     marginBottom: 17,
-    color: '#F9E2CC',
+    color: Palette.textOnDark,
     fontSize: 13,
     lineHeight: 19,
   },
@@ -508,16 +385,17 @@ const styles = StyleSheet.create({
   },
   fieldLabel: {
     marginBottom: 7,
-    color: '#FFF5E8',
+    color: Palette.surface,
     fontSize: 14,
     fontWeight: '600',
   },
   textInput: {
+    ...GlobalStyles.textInput,
     minHeight: 49,
     paddingHorizontal: 17,
-    borderRadius: 25,
-    backgroundColor: '#F4C2A6',
-    color: '#482E20',
+    borderRadius: Radii.pill,
+    backgroundColor: Palette.surfaceWarm,
+    color: Palette.text,
     fontSize: 14,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.24)',
@@ -529,7 +407,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   forgotText: {
-    color: '#FFE4C7',
+    color: Palette.textOnDark,
     fontSize: 12,
     fontWeight: '600',
   },
@@ -537,8 +415,8 @@ const styles = StyleSheet.create({
     minHeight: 49,
     paddingLeft: 17,
     paddingRight: 15,
-    borderRadius: 25,
-    backgroundColor: '#a0d194',
+    borderRadius: Radii.pill,
+    backgroundColor: Palette.surfaceWarm,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
@@ -548,29 +426,30 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 47,
     paddingVertical: 0,
-    color: '#482E20',
+    color: Palette.text,
     fontSize: 14,
   },
   showPasswordText: {
     paddingVertical: 8,
     paddingLeft: 8,
-    color: '#7E4827',
+    color: Palette.brown,
     fontSize: 12,
     fontWeight: '700',
   },
   message: {
     marginTop: 11,
-    color: '#FFF0D9',
+    color: Palette.surface,
     fontSize: 12,
     lineHeight: 18,
   },
   submitButton: {
+    ...GlobalStyles.primaryButton,
     minHeight: 52,
     marginTop: 20,
     paddingHorizontal: 22,
-    borderRadius: 28,
+    borderRadius: Radii.pill,
     borderWidth: 2,
-    borderColor: '#FFF7ED',
+    borderColor: Palette.surface,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -581,12 +460,13 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.99 }],
   },
   submitButtonText: {
-    color: '#FFF9F0',
+    ...GlobalStyles.primaryButtonText,
+    color: Palette.surface,
     fontSize: 16,
     fontWeight: '700',
   },
   submitArrow: {
-    color: '#FFF9F0',
+    color: Palette.surface,
     fontSize: 20,
     lineHeight: 22,
   },
@@ -598,18 +478,30 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   modeSwitchText: {
-    color: '#F6DFC9',
+    color: Palette.textOnDark,
     fontSize: 12,
   },
   modeSwitchLink: {
-    color: '#FFF9F0',
+    color: Palette.surface,
     fontSize: 12,
     fontWeight: '800',
     textDecorationLine: 'underline',
   },
+  guestButton: {
+    alignSelf: 'center',
+    marginTop: 17,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  guestButtonText: {
+    color: Palette.surface,
+    fontSize: 13,
+    fontWeight: '700',
+    textDecorationLine: 'underline',
+  },
   footerNote: {
     marginTop: 25,
-    color: '#F0D0AE',
+    color: Palette.textOnDark,
     textAlign: 'center',
     fontSize: 8,
     fontWeight: '700',

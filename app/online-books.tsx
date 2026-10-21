@@ -1,3 +1,5 @@
+import { Palette } from '../constants/theme';
+import { GlobalStyles } from '../constants/globalStyles';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -33,7 +35,7 @@ type GoogleVolume = {
   accessInfo?: { viewability?: string; epub?: { isAvailable?: boolean }; pdf?: { isAvailable?: boolean } };
 };
 
-const GREEN = '#40533C';
+const GREEN = Palette.brand;
 const GOOGLE_BOOKS = 'https://www.googleapis.com/books/v1/volumes';
 const OPEN_LIBRARY = 'https://openlibrary.org/search.json';
 
@@ -167,7 +169,7 @@ export default function OnlineBooksScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <SafeAreaView style={[GlobalStyles.screen, styles.safeArea]} edges={['top']}>
       <View style={styles.container}>
         <BooksBackground />
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
@@ -185,19 +187,19 @@ export default function OnlineBooksScreen() {
           <View style={styles.searchCard}>
             <Text style={styles.label}>Find a book</Text>
             <View style={styles.searchRow}>
-              <Ionicons name="search-outline" size={20} color="#777466" />
+              <Ionicons name="search-outline" size={20} color={Palette.muted} />
               <TextInput
                 style={styles.input}
                 value={query}
                 onChangeText={setQuery}
                 placeholder="Title, author, or topic..."
-                placeholderTextColor="#898575"
+                placeholderTextColor={Palette.mutedStrong}
                 returnKeyType="search"
                 onSubmitEditing={() => void searchBooks()}
                 accessibilityLabel="Search online books"
               />
               <TouchableOpacity style={styles.searchButton} onPress={() => void searchBooks()} disabled={loading || !query.trim()} accessibilityRole="button">
-                <Ionicons name="arrow-forward" size={19} color="#FFFCF4" />
+                <Ionicons name="arrow-forward" size={19} color={Palette.surface} />
               </TouchableOpacity>
             </View>
             <View style={styles.filterRow}>
@@ -267,7 +269,7 @@ export default function OnlineBooksScreen() {
                     {!!info.description && <Text numberOfLines={3} style={styles.description}>{info.description.replace(/<[^>]*>/g, '')}</Text>}
                     <View style={styles.actions}>
                       <TouchableOpacity style={[styles.readButton, !canPreview && styles.disabledButton]} onPress={() => void readBook(volume)} disabled={!canPreview} accessibilityRole="button">
-                        <Ionicons name="book-outline" size={17} color="#FFFCF4" />
+                        <Ionicons name="book-outline" size={17} color={Palette.surface} />
                         <Text style={styles.readButtonText}>{volume.source === 'Open Library' ? 'Reading options' : fullText ? 'Read online' : 'Google Preview'}</Text>
                       </TouchableOpacity>
                       <TouchableOpacity style={styles.saveButton} onPress={() => void saveBook(volume)} disabled={savingId === volume.id} accessibilityRole="button">
@@ -288,46 +290,46 @@ export default function OnlineBooksScreen() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: '#F3EBDD' },
+  safeArea: { flex: 1, backgroundColor: Palette.page },
   container: { flex: 1, backgroundColor: 'transparent' },
   content: { padding: 16, paddingBottom: 36, gap: 14 },
   backButton: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', gap: 7, paddingVertical: 8, paddingHorizontal: 2 },
   backText: { color: GREEN, fontSize: 14, fontWeight: '700' },
-  headingCard: { backgroundColor: '#FFFCF4', borderRadius: 17, borderWidth: 1, borderColor: '#E2D9C7', padding: 17 },
-  headingIcon: { width: 43, height: 43, borderRadius: 13, backgroundColor: '#E7E6D9', justifyContent: 'center', alignItems: 'center', marginBottom: 10 },
-  title: { color: '#30362C', fontSize: 25, fontWeight: '800' },
-  subtitle: { color: '#777466', fontSize: 13, lineHeight: 19, marginTop: 5 },
-  searchCard: { backgroundColor: '#FFFCF4', borderRadius: 16, borderWidth: 1, borderColor: '#E2D9C7', padding: 14 },
-  label: { color: '#30362C', fontSize: 14, fontWeight: '800', marginBottom: 9 },
-  searchRow: { minHeight: 49, borderRadius: 12, borderWidth: 1, borderColor: '#DED5C3', backgroundColor: '#FFFDF8', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 11, gap: 8 },
-  input: { flex: 1, color: '#30362C', fontSize: 14, paddingVertical: 10, outlineStyle: 'none' } as any,
+  headingCard: { backgroundColor: Palette.surface, borderRadius: 17, borderWidth: 1, borderColor: Palette.border, padding: 17 },
+  headingIcon: { width: 43, height: 43, borderRadius: 13, backgroundColor: Palette.brandLight, justifyContent: 'center', alignItems: 'center', marginBottom: 10 },
+  title: { color: Palette.text, fontSize: 25, fontWeight: '800' },
+  subtitle: { color: Palette.muted, fontSize: 13, lineHeight: 19, marginTop: 5 },
+  searchCard: { backgroundColor: Palette.surface, borderRadius: 16, borderWidth: 1, borderColor: Palette.border, padding: 14 },
+  label: { color: Palette.text, fontSize: 14, fontWeight: '800', marginBottom: 9 },
+  searchRow: { minHeight: 49, borderRadius: 12, borderWidth: 1, borderColor: Palette.borderStrong, backgroundColor: Palette.surfaceRaised, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 11, gap: 8 },
+  input: { flex: 1, color: Palette.text, fontSize: 14, paddingVertical: 10, outlineStyle: 'none' } as any,
   searchButton: { width: 36, height: 36, borderRadius: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: GREEN },
   filterRow: { flexDirection: 'row', gap: 8, marginTop: 11 },
-  filterChip: { borderRadius: 18, borderWidth: 1, borderColor: '#DED5C3', paddingHorizontal: 12, paddingVertical: 7, backgroundColor: '#FFFDF8' },
+  filterChip: { borderRadius: 18, borderWidth: 1, borderColor: Palette.borderStrong, paddingHorizontal: 12, paddingVertical: 7, backgroundColor: Palette.surfaceRaised },
   filterChipSelected: { backgroundColor: GREEN, borderColor: GREEN },
-  filterText: { color: '#656656', fontSize: 12, fontWeight: '700' },
-  filterTextSelected: { color: '#FFFCF4' },
-  messageCard: { minHeight: 185, alignItems: 'center', justifyContent: 'center', padding: 22, gap: 8, backgroundColor: '#FFFCF4', borderRadius: 16, borderWidth: 1, borderColor: '#E2D9C7' },
-  messageTitle: { color: '#30362C', fontSize: 17, fontWeight: '800', marginTop: 3 },
-  messageText: { color: '#777466', fontSize: 13, lineHeight: 19, textAlign: 'center', marginTop: 4 },
-  resultsHeading: { color: '#30362C', fontSize: 16, fontWeight: '800', marginBottom: 10 },
-  bookCard: { backgroundColor: '#FFFCF4', borderRadius: 16, borderWidth: 1, borderColor: '#E2D9C7', padding: 13, marginBottom: 11 },
+  filterText: { color: Palette.mutedDeep, fontSize: 12, fontWeight: '700' },
+  filterTextSelected: { color: Palette.surface },
+  messageCard: { minHeight: 185, alignItems: 'center', justifyContent: 'center', padding: 22, gap: 8, backgroundColor: Palette.surface, borderRadius: 16, borderWidth: 1, borderColor: Palette.border },
+  messageTitle: { color: Palette.text, fontSize: 17, fontWeight: '800', marginTop: 3 },
+  messageText: { color: Palette.muted, fontSize: 13, lineHeight: 19, textAlign: 'center', marginTop: 4 },
+  resultsHeading: { color: Palette.text, fontSize: 16, fontWeight: '800', marginBottom: 10 },
+  bookCard: { backgroundColor: Palette.surface, borderRadius: 16, borderWidth: 1, borderColor: Palette.border, padding: 13, marginBottom: 11 },
   bookTop: { flexDirection: 'row', gap: 12 },
-  cover: { width: 62, height: 84, borderRadius: 8, backgroundColor: '#E7E6D9', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+  cover: { width: 62, height: 84, borderRadius: 8, backgroundColor: Palette.brandLight, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
   coverImage: { width: '100%', height: '100%' },
   bookInfo: { flex: 1, paddingTop: 2 },
-  bookTitle: { color: '#30362C', fontSize: 15, fontWeight: '800' },
-  author: { color: '#777466', fontSize: 12, marginTop: 4 },
-  genre: { color: '#5C634D', fontSize: 11, marginTop: 4 },
-  availability: { alignSelf: 'flex-start', color: GREEN, fontSize: 10, fontWeight: '800', marginTop: 7, backgroundColor: '#E7E6D9', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 7 },
-  description: { color: '#777466', fontSize: 12, lineHeight: 17, marginTop: 10 },
+  bookTitle: { color: Palette.text, fontSize: 15, fontWeight: '800' },
+  author: { color: Palette.muted, fontSize: 12, marginTop: 4 },
+  genre: { color: Palette.oliveDark, fontSize: 11, marginTop: 4 },
+  availability: { alignSelf: 'flex-start', color: GREEN, fontSize: 10, fontWeight: '800', marginTop: 7, backgroundColor: Palette.brandLight, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 7 },
+  description: { color: Palette.muted, fontSize: 12, lineHeight: 17, marginTop: 10 },
   actions: { flexDirection: 'row', gap: 8, marginTop: 12 },
   readButton: { flex: 1, minHeight: 41, borderRadius: 10, backgroundColor: GREEN, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: 5 },
   disabledButton: { opacity: 0.45 },
-  readButtonText: { color: '#FFFCF4', fontSize: 11, fontWeight: '800' },
-  saveButton: { flex: 1, minHeight: 41, borderRadius: 10, backgroundColor: '#E7E6D9', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, paddingHorizontal: 5 },
+  readButtonText: { color: Palette.surface, fontSize: 11, fontWeight: '800' },
+  saveButton: { flex: 1, minHeight: 41, borderRadius: 10, backgroundColor: Palette.brandLight, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, paddingHorizontal: 5 },
   saveButtonText: { color: GREEN, fontSize: 11, fontWeight: '800' },
-  attribution: { textAlign: 'center', color: '#777466', fontSize: 10, marginTop: 2 },
-  fallbackNotice: { flexDirection: 'row', alignItems: 'center', gap: 7, backgroundColor: '#FFFCF4', borderColor: '#E2D9C7', borderWidth: 1, borderRadius: 11, padding: 10, marginBottom: 11 },
-  fallbackText: { flex: 1, color: '#5F6254', fontSize: 11, lineHeight: 16 },
+  attribution: { textAlign: 'center', color: Palette.muted, fontSize: 10, marginTop: 2 },
+  fallbackNotice: { flexDirection: 'row', alignItems: 'center', gap: 7, backgroundColor: Palette.surface, borderColor: Palette.border, borderWidth: 1, borderRadius: 11, padding: 10, marginBottom: 11 },
+  fallbackText: { flex: 1, color: Palette.mutedDark, fontSize: 11, lineHeight: 16 },
 });

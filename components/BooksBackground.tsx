@@ -1,4 +1,5 @@
 import { Image, StyleSheet, View } from 'react-native';
+import { Palette } from '../constants/theme';
 
 export default function BooksBackground() {
   return (
@@ -16,6 +17,6 @@ export default function BooksBackground() {
 const styles = StyleSheet.create({
   wash: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(255, 249, 233, 0.68)',
+    backgroundColor: Palette.wash,
   },
 });

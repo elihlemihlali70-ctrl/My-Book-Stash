@@ -108,7 +108,7 @@ export default function SettingsScreen() {
             accessibilityRole="button"
             accessibilityLabel="Go back"
           >
-            <Text style={styles.backArrow}>‹</Text>
+            <Text style={styles.backText}>Back</Text>
           </TouchableOpacity>
 
           <View style={styles.headerText}>
@@ -305,8 +305,9 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   backButton: {
-    width: 44,
+    minWidth: 64,
     height: 44,
+    paddingHorizontal: 12,
     borderRadius: 14,
     backgroundColor: Palette.surface,
     alignItems: 'center',
@@ -315,11 +316,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Palette.border,
   },
-  backArrow: {
+  backText: {
     color: PURPLE,
-    fontSize: 34,
-    lineHeight: 38,
-    marginTop: -4,
+    fontSize: 14,
+    fontWeight: '600',
   },
   headerText: {
     flex: 1,
@@ -560,4 +560,3 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-

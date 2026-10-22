@@ -1,5 +1,5 @@
-import { Palette } from '../../constants/theme';
 import { GlobalStyles } from '../../constants/globalStyles';
+import { Palette } from '../../constants/theme';
 
 
 import { Ionicons } from '@expo/vector-icons';
@@ -23,6 +23,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BooksBackground from '../../components/BooksBackground';
 
+import React from 'react';
 import {
   deleteBook,
   getBookCover,

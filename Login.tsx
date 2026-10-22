@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
+import { supabase } from './libnotepad/supabase';
 import {
   Image,
   KeyboardAvoidingView,
@@ -33,13 +34,15 @@ export default function BookstashAuthScreen() {
     setMessage('');
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (isSignUp && name.trim().length < 2) {
       setMessage('Add your name so we know what to call you.');
       return;
     }
 
-    if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
+    const cleanEmail = email.trim().toLowerCase();
+
+    if (!/^\S+@\S+\.\S+$/.test(cleanEmail)) {
       setMessage('Enter a valid email address to continue.');
       return;
     }
@@ -49,7 +52,37 @@ export default function BookstashAuthScreen() {
       return;
     }
 
-    setMessage('Authentication is not connected yet. You can browse your library as a guest.');
+    setMessage('');
+
+    try {
+      if (isSignUp) {
+        const { data, error } = await supabase.auth.signUp({
+          email: cleanEmail,
+          password,
+          options: {
+            data: { full_name: name.trim() },
+          },
+        });
+
+        if (error) throw error;
+
+        if (!data.session) {
+          setMessage('Account created. Check your email to confirm it, then sign in.');
+          return;
+        }
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: cleanEmail,
+          password,
+        });
+
+        if (error) throw error;
+      }
+
+      router.replace('/(tabs)');
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : 'Could not sign in. Please try again.');
+    }
   }
 
   return (
@@ -201,12 +234,6 @@ export default function BookstashAuthScreen() {
                 <Text style={styles.modeSwitchLink}>{isSignUp ? 'Sign in' : 'Sign up'}</Text>
               </Pressable>
             </View>
-            <Pressable
-              accessibilityRole="button"
-              onPress={() => router.replace('/(tabs)')}
-              style={styles.guestButton}>
-              <Text style={styles.guestButtonText}>Continue as a guest</Text>
-            </Pressable>
             <Text style={styles.footerNote}>MADE FOR THE LOVE OF A GOOD BOOK</Text>
           </View>
         </ScrollView>

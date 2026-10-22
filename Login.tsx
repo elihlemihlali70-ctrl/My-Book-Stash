@@ -70,7 +70,7 @@ export default function BookstashAuthScreen() {
                 resizeMode="contain"
                 accessibilityLabel="Book Stash logo"
               />
-          <Text style={styles.brandName}>My Book Stash</Text>
+              <Text style={styles.brandName}>My Book Stash</Text>
               <View style={styles.brandDots}>
                 <View style={[styles.dot, { backgroundColor: Palette.accentWarm }]} />
                 <View style={[styles.dot, { backgroundColor: Palette.accentSoft }]} />
@@ -508,6 +508,5 @@ const styles = StyleSheet.create({
     letterSpacing: 1.7,
   },
 });
-
 
 

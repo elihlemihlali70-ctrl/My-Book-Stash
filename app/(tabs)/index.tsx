@@ -1,11 +1,11 @@
-import { Palette } from '../../constants/theme';
 import { GlobalStyles } from '../../constants/globalStyles';
+import { Palette } from '../../constants/theme';
 
 
 import { Ionicons } from '@expo/vector-icons';
-import { useFocusEffect, useRouter } from 'expo-router';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -23,6 +23,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BooksBackground from '../../components/BooksBackground';
 
+import React from 'react';
 import {
   deleteBook,
   getBookCover,
@@ -59,6 +60,7 @@ const FILTERS: Array<'All' | ReadingStatus | 'Favourites'> = [
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { addedBookId } = useLocalSearchParams<{ addedBookId?: string }>();
 
   const [books, setBooks] = useState<BookWithMeta[]>([]);
   const [search, setSearch] = useState('');
@@ -67,6 +69,9 @@ export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBook, setStatusBook] = useState<Book | null>(null);
   const [savingStatus, setSavingStatus] = useState(false);
+  const listRef = useRef<FlatList<BookWithMeta>>(null);
+  const pendingAddedBookId = useRef<string | null>(null);
+  const handledAddedBookId = useRef<string | null>(null);
 
   const loadBooks = useCallback(async () => {
     try {
@@ -79,8 +84,12 @@ export default function HomeScreen() {
 
   useFocusEffect(
     useCallback(() => {
+      if (addedBookId && handledAddedBookId.current !== addedBookId) {
+        pendingAddedBookId.current = addedBookId;
+        handledAddedBookId.current = addedBookId;
+      }
       loadBooks();
-    }, [loadBooks])
+    }, [addedBookId, loadBooks])
   );
 
   const refresh = async () => {
@@ -117,6 +126,18 @@ export default function HomeScreen() {
 
     return matchesSearch && matchesFilter;
   });
+
+  useEffect(() => {
+    const bookId = pendingAddedBookId.current;
+    if (!bookId) return;
+
+    if (!filteredBooks.some((book) => book.id === bookId)) return;
+
+    pendingAddedBookId.current = null;
+    requestAnimationFrame(() => {
+      listRef.current?.scrollToEnd({ animated: true });
+    });
+  }, [filteredBooks]);
 
   const toggleFavorite = async (book: BookWithMeta) => {
     try {
@@ -339,6 +360,7 @@ export default function HomeScreen() {
     <SafeAreaView style={[GlobalStyles.screen, styles.container]} edges={['top']}>
       <BooksBackground />
       <FlatList
+        ref={listRef}
         data={filteredBooks}
         keyExtractor={(item) => item.id}
         renderItem={renderBook}

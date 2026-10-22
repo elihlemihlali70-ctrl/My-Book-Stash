@@ -150,7 +150,7 @@ export default function AddBookScreen() {
         });
       }
 
-      router.replace('/');
+      router.replace('/(tabs)');
     } catch (saveError) {
       console.error('Could not save book:', saveError);
 
@@ -184,7 +184,7 @@ export default function AddBookScreen() {
               accessibilityRole="button"
               accessibilityLabel="Go back"
             >
-              <Text style={styles.backText}>←</Text>
+              <Text style={styles.backText}>Back</Text>
             </TouchableOpacity>
 
             <View style={styles.headerCopy}>
@@ -452,8 +452,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   backButton: {
-    width: 43,
+    minWidth: 64,
     height: 43,
+    paddingHorizontal: 12,
     borderRadius: 13,
     backgroundColor: COLORS.white,
     borderWidth: 1,
@@ -462,7 +463,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backText: {
-    fontSize: 24,
+    fontSize: 14,
+    fontWeight: '600',
     color: COLORS.green,
   },
   headerCopy: {

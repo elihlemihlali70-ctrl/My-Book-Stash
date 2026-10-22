@@ -137,7 +137,7 @@ export default function OnlineBooksScreen() {
         else Alert.alert('Already in your library', 'This book is already in your library.');
         return;
       }
-      await addBook({
+      const addedBook = await addBook({
         title: info.title,
         author,
         genre: info.categories?.[0],
@@ -147,8 +147,10 @@ export default function OnlineBooksScreen() {
         readingUrl: info.previewLink,
         isPhysical: false,
       });
-      if (Platform.OS === 'web') window.alert('Added to your library as a digital book.');
-      else Alert.alert('Book added', 'Added to your library as a digital book.');
+      router.replace({
+        pathname: '/(tabs)',
+        params: { addedBookId: addedBook.id },
+      });
     } catch {
       if (Platform.OS === 'web') window.alert('Could not add this book. Please try again.');
       else Alert.alert('Could not add book', 'Please try again.');

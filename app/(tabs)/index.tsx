@@ -59,6 +59,9 @@ const FILTERS: Array<'All' | ReadingStatus | 'Favourites'> = [
 
 export default function HomeScreen() {
   const router = useRouter();
+  const handleLogout = () => {
+    router.replace('/login');
+  };
 
   const [books, setBooks] = useState<BookWithMeta[]>([]);
   const [search, setSearch] = useState('');
@@ -351,25 +354,42 @@ export default function HomeScreen() {
           />
         }
         ListHeaderComponent={
-          <View>
-            <View style={styles.header}>
-              <View style={styles.headerCopy}>
-                <Text style={styles.greeting}>MY PERSONAL LIBRARY</Text>
-                <Text style={styles.heading}>My Book Stash</Text>
-                <Text style={styles.subtitle}>
-                  Every book has a story.
-                </Text>
-              </View>
+         <View>
+         <View style={styles.header}>
+  <View style={styles.headerCopy}>
+    <Text style={styles.greeting}>MY PERSONAL LIBRARY</Text>
+    <Text style={styles.heading}>My Book Stash</Text>
+    <Text style={styles.subtitle}>
+      Every book has a story.
+    </Text>
+  </View>
 
-              <View style={styles.headerIcon}>
-                <Image
-                  source={require('../../assets/images/bookstash-logo.jpg')}
-                  style={styles.headerLogo}
-                  resizeMode="cover"
-                  accessibilityLabel="Book Stash logo"
-                />
-              </View>
-            </View>
+  <View style={styles.headerActions}>
+    <TouchableOpacity
+      style={styles.logoutButton}
+      onPress={handleLogout}
+      accessibilityRole="button"
+      accessibilityLabel="Log out"
+    >
+      <Ionicons
+        name="log-out-outline"
+        size={20}
+        color={Palette.brandDark}
+      />
+      <Text style={styles.logoutButtonText}>Logout</Text>
+    </TouchableOpacity>
+
+    <View style={styles.headerIcon}>
+      <Image
+        source={require('../../assets/images/bookstash-logo.jpg')}
+        style={styles.headerLogo}
+        resizeMode="cover"
+        accessibilityLabel="Book Stash logo"
+      />
+    </View>
+  </View>
+
+  </View>
 
             <View style={styles.statsRow}>
               <View style={styles.statCard}>
@@ -618,6 +638,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  headerActions: {
+  alignItems: 'center',
+  gap: 8,
+},
+
+logoutButton: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: 5,
+  paddingHorizontal: 10,
+  paddingVertical: 8,
+  borderRadius: 10,
+  borderWidth: 1,
+  borderColor: Palette.borderStrong,
+  backgroundColor: Palette.surface,
+},
+
+logoutButtonText: {
+  color: Palette.brandDark,
+  fontSize: 12,
+  fontWeight: '700',
+},
   headerLogo: {
     width: '100%',
     height: '100%',

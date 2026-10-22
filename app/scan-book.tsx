@@ -1,7 +1,6 @@
-import { Palette } from '../constants/theme';
 import { CameraView, useCameraPermissions, type BarcodeScanningResult } from 'expo-camera';
 import { useRouter } from 'expo-router';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   ActivityIndicator,
   StatusBar,
@@ -12,6 +11,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BooksBackground from '../components/BooksBackground';
+import { Palette } from '../constants/theme';
 import { addBook, getBooks, type Book } from '../services/books';
 
 type BookDetails = Omit<Book, 'id' | 'dateAdded'>;

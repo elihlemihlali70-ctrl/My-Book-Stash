@@ -1,8 +1,7 @@
-import { Palette } from '../constants/theme';
-import { GlobalStyles } from '../constants/globalStyles';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -16,8 +15,9 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import * as WebBrowser from 'expo-web-browser';
 import BooksBackground from '../components/BooksBackground';
+import { GlobalStyles } from '../constants/globalStyles';
+import { Palette } from '../constants/theme';
 import { addBook, getBooks } from '../services/books';
 
 type GoogleVolume = {

@@ -1,9 +1,8 @@
-import { Palette } from '../constants/theme';
 import { GlobalStyles } from '../constants/globalStyles';
+import { Palette } from '../constants/theme';
 
 import { useFocusEffect, useRouter } from 'expo-router';
-import { useCallback, useState } from 'react';
-import BooksBackground from '../components/BooksBackground';
+import React, { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -16,6 +15,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import BooksBackground from '../components/BooksBackground';
 import { getBooks, type Book } from '../services/books';
 
 const PURPLE = Palette.brand;

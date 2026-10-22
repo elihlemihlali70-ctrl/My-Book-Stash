@@ -1,5 +1,5 @@
-import { Palette } from '../constants/theme';
 import { GlobalStyles } from '../constants/globalStyles';
+import { Palette } from '../constants/theme';
 
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -21,6 +21,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BooksBackground from '../components/BooksBackground';
 
+import React from 'react';
 import {
   addBook,
   getBookById,

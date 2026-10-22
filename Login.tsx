@@ -1,16 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react';
 import {
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GlobalStyles } from './constants/globalStyles';
@@ -70,7 +70,7 @@ export default function BookstashAuthScreen() {
                 resizeMode="contain"
                 accessibilityLabel="Book Stash logo"
               />
-              <Text style={styles.brandName}>bookstash</Text>
+          <Text style={styles.brandName}>My Book Stash</Text>
               <View style={styles.brandDots}>
                 <View style={[styles.dot, { backgroundColor: Palette.accentWarm }]} />
                 <View style={[styles.dot, { backgroundColor: Palette.accentSoft }]} />
@@ -192,7 +192,7 @@ export default function BookstashAuthScreen() {
 
             <View style={styles.modeSwitchRow}>
               <Text style={styles.modeSwitchText}>
-                {isSignUp ? 'Already have an account?' : 'New to Bookstash?'}
+                {isSignUp ? 'Already have an account?' : 'New to My Book Stash?'}
               </Text>
               <Pressable
                 accessibilityRole="button"

@@ -1,8 +1,6 @@
-import { Palette } from '../constants/theme';
-import { GlobalStyles } from '../constants/globalStyles';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -15,6 +13,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BooksBackground from '../components/BooksBackground';
+import { GlobalStyles } from '../constants/globalStyles';
+import { Palette } from '../constants/theme';
 import {
   getBookById,
   getBookCover,

@@ -175,7 +175,13 @@ export default function OnlineBooksScreen() {
       <View style={styles.container}>
         <BooksBackground />
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-          <TouchableOpacity style={styles.backButton} onPress={() => router.back()} accessibilityRole="button">
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => router.back()}
+            accessibilityRole="button"
+            accessibilityLabel="Go back"
+            activeOpacity={0.8}
+          >
             <Ionicons name="arrow-back" size={20} color={GREEN} />
             <Text style={styles.backText}>Back</Text>
           </TouchableOpacity>
@@ -295,7 +301,24 @@ const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: Palette.page },
   container: { flex: 1, backgroundColor: 'transparent' },
   content: { padding: 16, paddingBottom: 36, gap: 14 },
-  backButton: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', gap: 7, paddingVertical: 8, paddingHorizontal: 2 },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    gap: 8,
+    minHeight: 44,
+    paddingHorizontal: 14,
+    marginBottom: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Palette.border,
+    backgroundColor: Palette.surface,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 5,
+    elevation: 2,
+  },
   backText: { color: GREEN, fontSize: 14, fontWeight: '700' },
   headingCard: { backgroundColor: Palette.surface, borderRadius: 17, borderWidth: 1, borderColor: Palette.border, padding: 17 },
   headingIcon: { width: 43, height: 43, borderRadius: 13, backgroundColor: Palette.brandLight, justifyContent: 'center', alignItems: 'center', marginBottom: 10 },

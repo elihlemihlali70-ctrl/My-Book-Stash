@@ -96,9 +96,10 @@ export default function BookScreen() {
             onPress={goBackToLibrary}
             accessibilityRole="button"
             accessibilityLabel="Back to library"
+            activeOpacity={0.8}
           >
-            <Ionicons name="arrow-back" size={21} color={COLORS.green} />
-            <Text style={styles.backText}>Library</Text>
+            <Ionicons name="arrow-back" size={20} color={COLORS.green} />
+            <Text style={styles.backText}>Back</Text>
           </TouchableOpacity>
 
           {loading ? (
@@ -209,13 +210,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    minHeight: 44,
+    minHeight: 42,
     paddingHorizontal: 14,
+    paddingVertical: 10,
     marginBottom: 16,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: COLORS.border,
     backgroundColor: COLORS.white,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 5,
+    elevation: 2,
   },
   backText: {
     color: COLORS.green,
